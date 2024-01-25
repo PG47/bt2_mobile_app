@@ -156,7 +156,7 @@
         android:layout_marginTop="664dp"
         android:layout_marginEnd="232dp"
         android:background="@drawable/custom_button"
-        android:onClick="showDatePicker"
+        android:onClick="Reset"
         android:text="Reset"
         android:textColor="#F3EEEE"
         app:layout_constraintEnd_toEndOf="parent"
@@ -175,66 +175,64 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioButton
-        android:id="@+id/Male_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="372dp"
-        android:text="Male"
-        android:textSize="20sp"
+
+    <RadioGroup
+        android:id="@+id/gender"
+        android:layout_width="380dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="364dp"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <RadioButton
-        android:id="@+id/Female_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="372dp"
-        android:text="Female"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/Male_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        <RadioButton
+            android:id="@+id/Male_button"
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:text="Male"
+            android:textSize="20sp" />
 
-    <RadioGroup android:id="@+id/radioGroupCoffeeType"
-        android:layout_width=
-        "match_parent" android:layout_height=
-        "wrap_content">
+        <RadioButton
+            android:id="@+id/Female_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"
+            android:textSize="20sp" />
 
     </RadioGroup>
 
-    <RadioButton
-        android:id="@+id/radDecaf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="520dp"
-        android:text="Futbal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.171"
-        app:layout_constraintStart_toEndOf="@+id/radColombian"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <RadioButton
-        android:id="@+id/radColombian"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="520dp"
-        android:checked="true"
-        android:text="Tennis"
+    <RadioGroup
+        android:id="@+id/Hobbies"
+        android:layout_width="377dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="500dp"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <RadioButton
-        android:id="@+id/radExpresso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="520dp"
-        android:text="Others"
-        app:layout_constraintStart_toEndOf="@+id/radDecaf"
-        app:layout_constraintTop_toTopOf="parent" />
+        <CheckBox
+            android:id="@+id/Tennis_cb"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Tennis"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/Futbal_cb"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:text="Futbal"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/Others_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Others"
+            android:textSize="20sp" />
+    </RadioGroup>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
