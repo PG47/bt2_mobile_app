@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".registerform">
 
     <TextView
         android:id="@+id/Username_label"
@@ -169,7 +169,6 @@
         android:layout_marginTop="664dp"
         android:layout_marginEnd="80dp"
         android:background="@drawable/custom_button"
-        android:onClick="showDatePicker"
         android:text="Sign-up"
         android:textColor="#F3EEEE"
         app:layout_constraintEnd_toEndOf="parent"

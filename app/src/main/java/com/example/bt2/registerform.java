@@ -1,23 +1,27 @@
 package com.example.bt2;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.text.TextWatcher;
 import android.text.Editable;
-import android.widget.CalendarView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
-public class MainActivity extends AppCompatActivity {
+public class registerform extends AppCompatActivity {
 
     EditText Username_textfield;
     EditText Password_textfield;
@@ -28,10 +32,11 @@ public class MainActivity extends AppCompatActivity {
     CheckBox tennisCheckBox;
     CheckBox futbalCheckBox;
     CheckBox othersCheckBox;
+    Button Signup_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.registerform);
         Username_textfield = findViewById(R.id.Username_textfield);
         Password_textfield = findViewById(R.id.Password_textfield);
         Retype_textfield = findViewById(R.id.Retype_textfield);
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         tennisCheckBox = findViewById(R.id.Tennis_cb);
         futbalCheckBox = findViewById(R.id.Futbal_cb);
         othersCheckBox = findViewById(R.id.Others_cb);
+        Signup_button = findViewById(R.id.Signup_button);
 
         dateEditText.addTextChangedListener(new TextWatcher() {
             private String current = "";
@@ -105,30 +111,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-        CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
+
+        Signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // If a checkbox is checked, uncheck the others
-                if (isChecked) {
-                    if (buttonView == tennisCheckBox) {
-                        futbalCheckBox.setChecked(false);
-                        othersCheckBox.setChecked(false);
-                    } else if (buttonView == futbalCheckBox) {
-                        tennisCheckBox.setChecked(false);
-                        othersCheckBox.setChecked(false);
-                    } else if (buttonView == othersCheckBox) {
-                        tennisCheckBox.setChecked(false);
-                        futbalCheckBox.setChecked(false);
-                    }
-                }
+            public void onClick(View v) {
+                Sign_up();
             }
-        };
-
-        tennisCheckBox.setOnCheckedChangeListener(checkBoxListener);
-        futbalCheckBox.setOnCheckedChangeListener(checkBoxListener);
-        othersCheckBox.setOnCheckedChangeListener(checkBoxListener);
-
-
+        });
     }
 
     public void showDatePicker(View view) {
@@ -160,12 +149,84 @@ public class MainActivity extends AppCompatActivity {
         othersCheckBox.setChecked(false);
     }
 
-    private void formatDateString(Editable editable) {
-        String input = editable.toString();
-        if (input.length() == 2 || input.length() == 5) {
-            // Add a "/" after the second and fifth character
-            editable.append("/");
-            return;
+    private boolean isValidDate(String dateStr) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+        try {
+            Date date = dateFormat.parse(dateStr);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+    private boolean Check() {
+        String username= String.valueOf(Username_textfield.getText());
+        if (username.equals("")){
+            Toast.makeText(this, "Username không được để trống!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        String pass = String.valueOf(Password_textfield.getText());
+        String retype = String.valueOf(Retype_textfield.getText());
+        if(pass.equals(retype)==false || pass.equals("")) {
+            Toast.makeText(this, "Password và retype không giống nhau!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        String date = String.valueOf(dateEditText.getText());
+        if(isValidDate(date) == false) {
+            Toast.makeText(this, "Ngày sinh không hợp lệ!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(Male_button.isChecked() == false && Female_button.isChecked() == false) {
+            Toast.makeText(this, "Phải chọn giới tính!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(tennisCheckBox.isChecked()==false && futbalCheckBox.isChecked()==false && othersCheckBox.isChecked()==false) {
+            Toast.makeText(this, "Xin hãy chọn ít nhất 1 loại sở thích!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+    private void Sign_up() {
+        boolean check = Check();
+        if(check) {
+            Intent intent = new Intent(this, resultform.class);
+
+            // Get the data from the components
+            String username = String.valueOf(Username_textfield.getText());
+            String password = String.valueOf(Password_textfield.getText());
+            String dateOfBirth = String.valueOf(dateEditText.getText());
+
+            // Determine the gender
+            String gender = "";
+            if (Male_button.isChecked()) {
+                gender = "Male";
+            } else {
+                gender = "Female";
+            }
+
+            // Get the selected hobbies
+            String hobbies="";
+            if (tennisCheckBox.isChecked()) {
+                hobbies = hobbies + "Tennis";
+                if (futbalCheckBox.isChecked()) hobbies = hobbies +", ";
+
+            }
+            if (futbalCheckBox.isChecked()) {
+                hobbies = hobbies +"Futbal";
+                if (othersCheckBox.isChecked()) hobbies = hobbies + ", ";
+            }
+            if (othersCheckBox.isChecked()) {
+                hobbies = hobbies + "Others";
+            }
+
+            // Put the data into the Intent
+            intent.putExtra("USERNAME", username);
+            intent.putExtra("PASSWORD", password);
+            intent.putExtra("DATE_OF_BIRTH", dateOfBirth);
+            intent.putExtra("GENDER", gender);
+            intent.putExtra("HOBBIES", hobbies);
+
+            startActivity(intent);
         }
     }
 
